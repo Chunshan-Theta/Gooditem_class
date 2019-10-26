@@ -1,0 +1,150 @@
+swagger: "2.0"
+info:
+  description: "This is a simple API"
+  version: "1.0.0"
+  title: "Simple Inventory API"
+  contact:
+    email: "you@your-company.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "127.0.0.1:8088"
+basePath: "/comment/0100"
+tags:
+- name: "comment_based"
+  description: "Secured Admin-only calls"
+schemes:
+- "https"
+- "http"
+paths:
+  /class:
+    get:
+      tags:
+      - "comment_based"
+      summary: "Info of class"
+      description: ""
+      operationId: "info_class_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "comment_id"
+        in: "query"
+        description: "Eamples: 1"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/comment"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
+    post:
+      tags:
+      - "comment_based"
+      summary: "Info of class"
+      description: ""
+      operationId: "new_class_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/comment"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
+    put:
+      tags:
+      - "comment_based"
+      summary: "Info of class"
+      description: ""
+      operationId: "update_class_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/comment"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
+definitions:
+  comment:
+    type: "object"
+    required:
+    - "class_name"
+    - "comment_id"
+    - "object_type"
+    - "teacher_name"
+    - "user_memo"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      comment_id:
+        type: "integer"
+        example: 1
+      object_type:
+        type: "string"
+        enum:
+        - "normal"
+        - "banned"
+        default: "normal"
+      class_name:
+        type: "string"
+        example: "奇幻中文課"
+      teacher_name:
+        type: "string"
+        example: "鍾老師"
+      user_memo:
+        type: "string"
+        example: "超過100分！"
+  message:
+    type: "object"
+    required:
+    - "request_status"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      message:
+        type: "string"
+        example: "Someting Text"
