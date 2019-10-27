@@ -44,6 +44,32 @@ paths:
           schema:
             $ref: "#/definitions/message"
       x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
+    delete:
+      tags:
+        - "comment_based"
+      summary: "Info of class"
+      description: ""
+      operationId: "delete_class_with_array_obj_input"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "comment_id"
+          in: "query"
+          description: "Eamples: 1"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
     post:
       tags:
       - "comment_based"
