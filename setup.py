@@ -24,7 +24,7 @@ setup(
     keywords=["Swagger", "Simple Inventory API"],
     install_requires=REQUIRES,
     packages=find_packages(),
-    package_data={'': ['swagger/swagger_comment_0100.yaml']},
+    package_data={'': ['swagger/swagger_comment_0100.yaml','swagger/swagger_reply_0100.yaml']},
     include_package_data=True,
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},

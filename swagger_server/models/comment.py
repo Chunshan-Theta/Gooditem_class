@@ -14,8 +14,10 @@ class Comment(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(self, request_status: str='success', comment_id: int=None, object_type: str=None, class_name: str=None, teacher_name: str=None, user_memo: str=None):  # noqa: E501
+    # comment_id,classN,teacherN,say,[major, midexam, endexam, value, cost, classcall, homework, classexam,posttime]
+    def __init__(self, request_status: str='success', comment_id: int=None, object_type: str=None, class_name: str=None, teacher_name: str=None, user_memo: str=None,
+                 major: str='N/A',midexam: int=0,endexam: int=0,classcall: int=0,homework: int=0, classexam: int=0,
+                 value: str='N/A', cost: str='N/A'):  # noqa: E501
         """Comment - a model defined in Swagger
 
         :param request_status: The request_status of this Comment.  # noqa: E501
@@ -46,15 +48,24 @@ class Comment(Model):
             'object_type': 'object_type',
             'class_name': 'class_name',
             'teacher_name': 'teacher_name',
-            'user_memo': 'user_memo'
+            'user_memo': 'user_memo',
+            'major': 'major'
         }
-
         self._request_status = request_status
         self._comment_id = comment_id
         self._object_type = object_type
         self._class_name = class_name
         self._teacher_name = teacher_name
         self._user_memo = user_memo
+        self._major = major
+        self.midexam = midexam
+        self.endexam = endexam
+        self.value = value
+        self.cost = cost
+        self.classcall = classcall
+        self.homework = homework
+        self.classexam = classexam
+
     def to_dict(self):
         return {
             "request_status" : self.request_status,
@@ -62,8 +73,17 @@ class Comment(Model):
             "object_type" : self.object_type,
             "class_name" : self.class_name,
             "teacher_name" : self.teacher_name,
-            "user_memo" : self.user_memo
+            "user_memo" : self.user_memo,
+            "major" : self._major,
+            "midexam" : self.midexam,
+            "endexam" : self.endexam,
+            "value" : self.value,
+            "cost" : self.cost,
+            "classcall" : self.classcall,
+            "homework" : self.homework,
+            "classexam" : self.classexam,
         }
+
     @classmethod
     def from_dict(cls, dikt) -> 'Comment':
         """Returns the dict as a model

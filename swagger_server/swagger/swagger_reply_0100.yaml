@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  description: "This is a simple API"
+  version: "1.0.0"
+  title: "Simple Inventory API"
+  contact:
+    email: "you@your-company.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "127.0.0.1:8080"
+basePath: "/reply/0100"
+tags:
+- name: "reply_based"
+  description: "Secured Admin-only calls"
+schemes:
+- "https"
+- "http"
+paths:
+  /reply:
+    get:
+      tags:
+      - "reply_based"
+      summary: "Info of reply"
+      description: ""
+      operationId: "info_reply_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "reply_id"
+        in: "query"
+        description: "Examples: 1"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/reply"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.reply_based_controller"
+      ## here
+    delete:
+      tags:
+        - "reply_based"
+      summary: "Info of reply"
+      description: ""
+      operationId: "delete_reply_with_array_obj_input"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "reply_id"
+          in: "query"
+          description: "Eamples: 1"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/reply"
+        404:
+          description: "not find reply id operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.reply_based_controller"
+    post:
+      tags:
+      - "reply_based"
+      summary: "Info of reply"
+      description: ""
+      operationId: "new_reply_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "reply object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/reply"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.reply_based_controller"
+    put:
+      tags:
+      - "reply_based"
+      summary: "Info of reply"
+      description: ""
+      operationId: "update_reply_with_array_obj_input"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/reply"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.reply_based_controller"
+definitions:
+  reply:
+    type: "object"
+    required:
+    - "replay_id"
+    - "comment_id"
+    - "object_type"
+    - "user_memo"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      replay_id:
+        type: "integer"
+        example: 1
+      comment_id:
+        type: "integer"
+        example: 1
+      object_type:
+        type: "string"
+        enum:
+        - "normal"
+        - "banned"
+        default: "normal"
+      user_memo:
+        type: "string"
+        example: "超過100分！"
+  message:
+    type: "object"
+    required:
+    - "request_status"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      message:
+        type: "string"
+        example: "Someting Text"

@@ -61,7 +61,7 @@ def new_class_with_array_obj_input(body):  # noqa: E501
             classcall = body_json['classcall'] if 'classcall' in body_json else 2
             homework = body_json['homework'] if 'homework' in body_json else 2
             classexam = body_json['classexam'] if 'classexam' in body_json else 2
-            id = c.new_comment_byid(body.class_name, body.teacher_name, major, midexam, endexam, body.user_memo, value, cost,classcall,homework,classexam)
+            _ = c.new_comment_byid(body.class_name, body.teacher_name, major, midexam, endexam, body.user_memo, value, cost,classcall,homework,classexam)
 
             return Message(msg="ok").to_dict(), 200
         except Exception as e:
