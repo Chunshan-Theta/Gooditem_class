@@ -1,0 +1,224 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a simple API"
+  version: "1.0.0"
+  title: "Simple Inventory API"
+  contact:
+    email: "you@your-company.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+#host: "127.0.0.1:8080"
+host: "goodclass.cf:8080"
+basePath: "/search/0100"
+tags:
+- name: "search_based"
+  description: "Secured Admin-only calls"
+schemes:
+- "https"
+- "http"
+paths:
+  /comment/keyword:
+    get:
+      tags:
+      - "search_based"
+      summary: "Info of comments"
+      description: ""
+      operationId: "comment_keyword"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "keyword"
+        in: "query"
+        description: "split by space"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/comment"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.search_controller"
+  /comment/newest:
+    get:
+      tags:
+      - "search_based"
+      summary: "Info of comments"
+      description: ""
+      operationId: "comments_newest"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: "start_num"
+          in: "query"
+          description: ""
+          required: False
+          type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/comment"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.search_controller"
+  /reply/newest:
+    get:
+      tags:
+      - "search_based"
+      summary: "Info of replies"
+      description: ""
+      operationId: "replies_newest"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/reply"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.search_controller"
+  /reply/under_comment:
+    get:
+      tags:
+        - "search_based"
+      summary: "Info of replies"
+      description: ""
+      operationId: "replies_under_comment"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "comment_id"
+          in: "query"
+          description: "Examples: 1"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/reply"
+        404:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/message"
+      x-swagger-router-controller: "swagger_server.controllers.search_controller"
+definitions:
+  reply:
+    type: "object"
+    required:
+    - "comment_id"
+    - "object_type"
+    - "replay_id"
+    - "user_memo"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      replay_id:
+        type: "integer"
+        example: 1
+      comment_id:
+        type: "integer"
+        example: 1
+      object_type:
+        type: "string"
+        default: "normal"
+        enum:
+        - "normal"
+        - "banned"
+      user_memo:
+        type: "string"
+        example: "超過100分！"
+    example:
+      request_status: "success"
+      object_type: "normal"
+      replay_id: 1
+      user_memo: "超過100分！"
+      comment_id: 1
+  message:
+    type: "object"
+    required:
+    - "request_status"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      message:
+        type: "string"
+        example: "Someting Text"
+  comment:
+    type: "object"
+    required:
+    - "class_name"
+    - "comment_id"
+    - "object_type"
+    - "teacher_name"
+    - "user_memo"
+    properties:
+      request_status:
+        type: "string"
+        default: "success"
+        enum:
+        - "success"
+        - "error"
+        - "warring"
+      comment_id:
+        type: "integer"
+        example: 1
+      object_type:
+        type: "string"
+        default: "normal"
+        enum:
+        - "normal"
+        - "banned"
+      class_name:
+        type: "string"
+        example: "奇幻中文課"
+      teacher_name:
+        type: "string"
+        example: "鍾老師"
+      user_memo:
+        type: "string"
+        example: "超過100分！"
+    example:
+      request_status: "success"
+      teacher_name: "鍾老師"
+      object_type: "normal"
+      user_memo: "超過100分！"
+      class_name: "奇幻中文課"

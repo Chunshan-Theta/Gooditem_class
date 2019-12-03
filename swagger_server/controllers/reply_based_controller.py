@@ -7,6 +7,12 @@ from swagger_server.models.util_mysql import reply_operation as operation
 
 
 def info_reply_with_array_obj_input(reply_id):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
+
     try:
         c = operation()
         return c.select_reply_byid(reply_id=reply_id).to_dict(), 200
@@ -14,6 +20,11 @@ def info_reply_with_array_obj_input(reply_id):  # noqa: E501
         return Message(request_status="error", msg="UNKNOWERROR: {}".format(e)).to_dict(), 200
 
 def delete_reply_with_array_obj_input(reply_id):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
     try:
         c = operation()
 
@@ -24,6 +35,11 @@ def delete_reply_with_array_obj_input(reply_id):  # noqa: E501
 
 
 def new_reply_with_array_obj_input(body):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
 
     if connexion.request.is_json:
         body_json = connexion.request.get_json()
@@ -44,6 +60,11 @@ def new_reply_with_array_obj_input(body):  # noqa: E501
 
 
 def update_reply_with_array_obj_input(body):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
 
     error_msg = Message(request_status="error", msg="NotImplementedError")
     return error_msg.to_dict(), 500

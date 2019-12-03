@@ -4,6 +4,7 @@ from mysql.connector import pooling
 from swagger_server.models.secret import password,user,database,host
 from swagger_server.models.comment import Comment
 from swagger_server.models.reply import Reply
+from swagger_server.models.util_logging import records
 
 
 
@@ -52,18 +53,25 @@ class MysqlObj_pool(MysqlObj):
   def exe(self,sql="SELECT * FROM `comment` WHERE `comment_id` < %s", agrs:list=[10]):
       cursor=self.connection_objt.cursor()
       cursor.execute(sql, agrs)
-      print("[SQL]:\t{}".format(cursor.statement))
+      #print("[SQL]:\t{}".format(cursor.statement))
+      records("SQL","MySql_util","{}".format(cursor.statement))
       try:
           result = cursor.fetchall()
-          cursor.close()
+
           return result
       except mysql.connector.errors.InterfaceError as e:
-          print("[Row]:\t{}".format(cursor.lastrowid))
+          #print("[Row]:\t{}".format(cursor.lastrowid))
+          records("SQL", "MySql_util", "{}".format(cursor.lastrowid),"error")
           self.connection_objt.commit()
           cursor.close()
           return str(cursor.lastrowid)
+      finally:
+          cursor.close()
+          self.connection_objt.close()
+          del self.connection_objt
 
   def close(self):
+      self.connection_objt.close()
       del self.connection_objt
 
 class comment_operation(MysqlObj_pool):
@@ -152,7 +160,7 @@ class reply_operation(MysqlObj_pool):
 
 class search_operation(MysqlObj_pool):
 
-  def select_reply_byNewest(self,num = 1000) -> list:
+  def select_reply_byNewest(self,num = 30) -> list:
       responds = list()
       sql = "SELECT * FROM `comment_reply` ORDER BY `reply_id` DESC limit %s";
       agrs= [num]
@@ -165,7 +173,7 @@ class search_operation(MysqlObj_pool):
           reply_obj = Reply(replay_id=reply_id,comment_id=reply_comment_id,user_memo=reply_content,object_type=reply_type)
           responds.append(reply_obj.to_dict())
       return responds
-  def select_reply_under_comment(self,comment_id,num=1000) -> list:
+  def select_reply_under_comment(self,comment_id,num = 30) -> list:
       responds = list()
       sql = "SELECT * FROM `comment_reply` WHERE `comment_id`=%s ORDER BY `reply_id` DESC limit %s";
       agrs= [comment_id,num]
@@ -179,10 +187,10 @@ class search_operation(MysqlObj_pool):
           responds.append(reply_obj.to_dict())
       return responds
 
-  def select_comment_byNewest(self,num = 1000) -> list:
+  def select_comment_byNewest(self,start_num=0,num = 30) -> list:
       responds = list()
-      sql = "SELECT * FROM `comment` ORDER BY `comment_id` DESC limit %s";
-      agrs= [num]
+      sql = "SELECT * FROM `comment` ORDER BY `comment_id` DESC limit %s,%s";
+      agrs= [start_num,start_num+num]
       results = self.exe(sql=sql,agrs=tuple(agrs))
       for result in results:
           Commentobj = Comment(comment_id=result[0], object_type=result[13], class_name=result[1],

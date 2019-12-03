@@ -7,6 +7,11 @@ from swagger_server.models.util_mysql import comment_operation
 
 
 def info_class_with_array_obj_input(comment_id):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
     """Info of class
 
      # noqa: E501
@@ -20,6 +25,11 @@ def info_class_with_array_obj_input(comment_id):  # noqa: E501
     return c.select_comment_byid(comment_id=comment_id).to_dict(),200
 
 def delete_class_with_array_obj_input(comment_id):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
     """Info of class
 
      # noqa: E501
@@ -39,6 +49,11 @@ def delete_class_with_array_obj_input(comment_id):  # noqa: E501
 
 
 def new_class_with_array_obj_input(body):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
     """Info of class
 
      # noqa: E501
@@ -72,6 +87,11 @@ def new_class_with_array_obj_input(body):  # noqa: E501
 
 
 def update_class_with_array_obj_input(body):  # noqa: E501
+    # 拒絕非認證的來源 refuse user or origin
+    Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
+    connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
+    if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
+        return {"ERROR": "Unauthorized USER"}, 401
     """Info of class
 
      # noqa: E501
