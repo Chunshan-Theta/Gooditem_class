@@ -79,8 +79,10 @@ class comment_operation(MysqlObj_pool):
       sql = "SELECT * FROM `comment` WHERE `comment_id` = %s"
       agrs= [comment_id]
       result = self.exe(sql=sql,agrs=tuple(agrs))[0]
-      Commentobj = Comment(comment_id=result[0], object_type=result[13], class_name=result[1], teacher_name=result[2],
-                           user_memo=result[6])
+      Commentobj = Comment(comment_id=result[0], object_type=result[13], class_name=result[1],
+                               teacher_name=result[2],
+                               user_memo=result[6],major=result[3],midexam=result[4],endexam=result[5],
+                               value=result[7],cost=result[8],classcall=result[9],homework=result[10],classexam=result[11])
 
       return Commentobj
   def delete_comment_byid(self,comment_id) -> Comment:

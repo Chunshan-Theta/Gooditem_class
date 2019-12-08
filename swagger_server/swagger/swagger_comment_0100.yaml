@@ -126,6 +126,12 @@ paths:
           schema:
             $ref: "#/definitions/message"
       x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
+    options:
+      operationId: "options_method"
+      responses:
+        200:
+          description: "successful operation"
+      x-swagger-router-controller: "swagger_server.controllers.comment_based_controller"
 definitions:
   comment:
     type: "object"

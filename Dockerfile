@@ -11,7 +11,7 @@ COPY . /usr/src/app
 
 EXPOSE 8080
 
-ENTRYPOINT ["python3"]
+#ENTRYPOINT ["python3"]
 
 #CMD ["-m", "swagger_server"]
-#CMD ["/bin/bash"]
+CMD ["/bin/sh"]

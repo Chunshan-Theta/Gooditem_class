@@ -1,0 +1,1 @@
+header = {"Access-Control-Allow-Origin":"*","Access-Control-Allow-Methods":"OPTIONS,POST,GET,DELETE,PUT","Access-Control-Allow-Headers":"x-requested-with,content-type"}

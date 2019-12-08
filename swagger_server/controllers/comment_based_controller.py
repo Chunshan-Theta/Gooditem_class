@@ -4,6 +4,8 @@ import six
 from swagger_server.models.comment import Comment  # noqa: E501
 from swagger_server.models.message import Message  # noqa: E501
 from swagger_server.models.util_mysql import comment_operation
+from swagger_server.controllers.util_request import header
+
 
 
 def info_class_with_array_obj_input(comment_id):  # noqa: E501
@@ -11,7 +13,7 @@ def info_class_with_array_obj_input(comment_id):  # noqa: E501
     Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
     connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
     if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
-        return {"ERROR": "Unauthorized USER"}, 401
+        return {"ERROR": "Unauthorized USER"}, 401,header
     """Info of class
 
      # noqa: E501
@@ -22,14 +24,14 @@ def info_class_with_array_obj_input(comment_id):  # noqa: E501
     :rtype: object
     """
     c = comment_operation()
-    return c.select_comment_byid(comment_id=comment_id).to_dict(),200
+    return c.select_comment_byid(comment_id=comment_id).to_dict(),200,header
 
 def delete_class_with_array_obj_input(comment_id):  # noqa: E501
     # 拒絕非認證的來源 refuse user or origin
     Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
     connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
     if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
-        return {"ERROR": "Unauthorized USER"}, 401
+        return {"ERROR": "Unauthorized USER"}, 401,header
     """Info of class
 
      # noqa: E501
@@ -43,9 +45,9 @@ def delete_class_with_array_obj_input(comment_id):  # noqa: E501
         c = comment_operation()
 
         c.delete_comment_byid(comment_id=comment_id)
-        return Message(msg="ok").to_dict(), 200
+        return Message(msg="ok").to_dict(), 200,header
     except Exception as e:
-        return Message(request_status="error",msg="UNKNOWERROR: {}".format(e)).to_dict(), 200
+        return Message(request_status="error",msg="UNKNOWERROR: {}".format(e)).to_dict(), 200,header
 
 
 def new_class_with_array_obj_input(body):  # noqa: E501
@@ -53,7 +55,7 @@ def new_class_with_array_obj_input(body):  # noqa: E501
     Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
     connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
     if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
-        return {"ERROR": "Unauthorized USER"}, 401
+        return {"ERROR": "Unauthorized USER"}, 401,header
     """Info of class
 
      # noqa: E501
@@ -78,12 +80,12 @@ def new_class_with_array_obj_input(body):  # noqa: E501
             classexam = body_json['classexam'] if 'classexam' in body_json else 2
             _ = c.new_comment_byid(body.class_name, body.teacher_name, major, midexam, endexam, body.user_memo, value, cost,classcall,homework,classexam)
 
-            return Message(msg="ok").to_dict(), 200
+            return Message(msg="ok").to_dict(), 200,header
         except Exception as e:
-            return Message(request_status="error", msg="UNKNOWERROR: {}".format(e)).to_dict(), 200
+            return Message(request_status="error", msg="UNKNOWERROR: {}".format(e)).to_dict(), 200,header
     else:
         error_msg = Message(request_status="error", msg="connexion.request.is_json")
-        return error_msg.to_dict(),500
+        return error_msg.to_dict(),500,header
 
 
 def update_class_with_array_obj_input(body):  # noqa: E501
@@ -91,7 +93,7 @@ def update_class_with_array_obj_input(body):  # noqa: E501
     Origin = connexion.request.headers["Sec-Fetch-Site"] if "Sec-Fetch-Site" in connexion.request.headers else \
     connexion.request.headers["Origin"] if "Origin" in connexion.request.headers else None
     if Origin != "same-site" and Origin != "same-origin" and Origin != "https://goodclass.cf":
-        return {"ERROR": "Unauthorized USER"}, 401
+        return {"ERROR": "Unauthorized USER"}, 401,header
     """Info of class
 
      # noqa: E501
@@ -103,7 +105,10 @@ def update_class_with_array_obj_input(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Comment.from_dict(connexion.request.get_json())  # noqa: E501
-        return body
+        return body,200,header
     else:
         error_msg = Message(request_status="error", msg="connexion.request.is_json")
-        return error_msg.to_dict(), 500
+        return error_msg.to_dict(), 500,header
+
+def options_method():
+    return {"status":"ok"}, 200, header
