@@ -1,0 +1,49 @@
+/*自定义一个透明度从0到1的动画，它的名称是fade-in*/
+@keyframes fade-in{
+    0%{ opacity: 0;}
+    100%{opacity:1;}
+}
+@-webkit-keyframes fade-in{
+    0%{ opacity: 0;}
+    100%{opacity:1;}
+}
+@-ms-keyframes fade-in{
+    0%{ opacity: 0;}
+    100%{opacity:1;}
+}
+@-o-keyframes fade-in{
+    0%{ opacity: 0;}
+    100%{opacity:1;}
+}
+@-moz-keyframes fade-in{
+    0%{ opacity: 0;}
+    100%{opacity:1;}
+}
+
+.page_num{
+
+		color: #ffffff;
+		font-weight: 300;
+		letter-spacing: 0.1em;
+		line-height: 1.5;
+		margin-top: 1em;
+		margin-bottom: 1em;
+		text-transform: uppercase;
+		text-align: center;
+
+}
+.page_num p{
+    opacity: 0;
+    animation: fade-in 1.25s ease-in-out 1.5s;
+    -moz-transition: fade-in 1.25s ease-in-out 1.5s;
+    -webkit-transition: fade-in 1.25s ease-in-out 1.5s;
+    -ms-transition: fade-in 1.25s ease-in-out 1.5s;
+    transition: fade-in 1.25s ease-in-out 1.5s;
+
+    /*规定动画的最后状态为结束状态*/
+    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    -ms-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+}

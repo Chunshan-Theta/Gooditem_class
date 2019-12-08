@@ -1,0 +1,1 @@
+rest_get_id_comment();

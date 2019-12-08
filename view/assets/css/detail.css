@@ -1,0 +1,79 @@
+html, body{
+    background-color:#535353;
+}
+#main_title {
+    width:100%;
+    padding: 5rem 2rem 2rem 5rem;
+    font-size: 1.3rem;
+
+}
+#main_detail {
+    width:100%;
+    padding: 2rem 2rem 2rem 5rem;
+    display: grid;
+    grid-template-columns: 35% 65%;
+
+}
+
+#left-side{
+
+    font-size: 1.3rem;
+
+}
+#right-side{
+    font-size: 1rem;
+
+}
+
+#main_detail div{
+    /*border: inset;*/
+    text-align: left;
+
+
+}
+#main_reply {
+    width:100%;
+    padding: 0rem 1rem 1rem 5rem;
+    text-align: center;
+}
+#main_reply div{
+    /*background-color: #a3a3a3;*/
+    width:auto;
+    margin-top: 2.5rem;
+    text-align: left;
+    border-bottom: inset;
+}
+#main_comment {
+    width:100%;
+    padding: 2rem 2rem 2rem 5rem;
+    text-align: left;
+}
+#main h2{
+    padding: 0rem 0rem 0rem 2rem;
+}
+
+@media screen and (max-width: 480px){
+    #main_title {
+        width:100%;
+        padding: 5rem 2rem 2rem 2rem;
+        font-size: 1.3rem;
+
+    }
+    #main_detail {
+        width:100%;
+        padding: 2rem 2rem 2rem 2rem;
+        display: grid;
+        grid-template-columns: 35% 65%;
+
+    }
+    #main_comment {
+    width:100%;
+    padding: 2rem 2rem 2rem 2rem;
+    text-align: left;
+    }
+    #main_reply{
+    /*background-color: #a3a3a3;*/
+    padding: 2rem 2rem 2rem 2rem;
+}
+
+}
